@@ -6,82 +6,101 @@ typedef struct {
 	int a;
 } List;
 
-List *NewNode(List * head)
+void LastInsert(List** head, int num)
 {
-	List* p = (List *)malloc(sizeof(List));
-	p->next = head;
-	head = p;
-	return (head);
+	List* p;
+
+	p = (List*)malloc(sizeof(List));
+	p->a = num;
+	p->next = 0;
+	if (*head == 0 || !p) {
+		*head = p;
+		return;
+	}
+	List* cur = *head;
+	while (cur->next != 0)
+	{
+		cur = cur->next;
+	}
+	cur->next = p;
 }
 
-List* LastInsert(List* head, int num)
+void Insert_first(List** head, int num)
 {
-	List* p = (List*)malloc(sizeof(List));
+	List*	p;
+
+	p = (List*)malloc(sizeof(List));
 	p->a = num;
-	p->next = NULL;
-	List* cur = head;
+	p->next = *head;
+	*head = p;
+}
+
+void Delete_first(List** head)
+{
+	List*	node;
+
+	node = (*head)->next;
+	free(*head);
+	*head = node;
+}
+
+void Delete_last(List** head)
+{
+	List*	node;
+	List*	pre;
+
+	pre = 0;
+	node = *head;
+	while (node->next != 0)
+	{
+		pre = node;
+		node = node->next;
+	}
+	if (pre == 0)
+	{
+		free(node);
+		node = 0;
+	}
+	else
+	{
+		free(node);
+		pre->next = 0;
+	}
+}
+
+void methodNode(List* head, void (*f)(List *))
+{
+	List*	node;
 	
-	if(cur)
-	{
-		while (cur->next != NULL)
-		{
-			cur = cur->next;
-		}
-		cur->next = p;
-	}
-	return (head);
-}
-
-List* Insert_first(List* head, int num)
-{
-	List* p = (List*)malloc(sizeof(List));
-	p->a = num;
-	p->next = head;
-	head = p;
-	return (head);
-}
-
-List* Delete_first(List* head)
-{
-	List* node;
-	node = head->next;
-	free(head);
-	return (node);
-}
-
-List* Delete_last(List* head)
-{
-	List* node;
 	node = head;
-	while (node->next != NULL)
+	while (node != 0)
 	{
+		f(node);
 		node = node->next;
 	}
-	free(node);
-	return (head);
 }
 
-void printNode(List* head)
+void print(List *node)
 {
-	List *node = head;
-	while (node->next != NULL)
-	{
-		printf("%d\n", node->a);
-		node = node->next;
-	}
+	printf("%d\n", node->a);
 }
 
 int main(void)
 {
-	List *head =NULL;
-	//head = NewNode(head);
+	List*	head;
+
+	head = 0;
 	for (int i = 10; i >= 0; i--)
 	{
-		head = Insert_first(head, i);
+		LastInsert(&head, i);
 	}
+	methodNode(head, print);
+	Delete_first(&head);
+	Delete_first(&head);
+	Delete_first(&head);
+	Delete_last(&head);
+	Delete_last(&head);
 
-	printNode(head);
-	//head = Delete_first(head);
-	//printNode(head);
+	methodNode(head, print);
 	return (0);
 }
