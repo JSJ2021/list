@@ -1,106 +1,41 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "push_swap.h"
 
-typedef struct {
-	struct List *next;
-	int a;
-} List;
-
-void LastInsert(List** head, int num)
+int main(int argc, char** argv)
 {
-	List* p;
+	int	cnt;
 
-	p = (List*)malloc(sizeof(List));
-	p->a = num;
-	p->next = 0;
-	if (*head == 0 || !p) {
-		*head = p;
-		return;
-	}
-	List* cur = *head;
-	while (cur->next != 0)
+	cnt = 0;
+	while (cnt < argc)
 	{
-		cur = cur->next;
+		//숫자인지 확인
+		//문자숫자열을 숫자로 변환
+		cnt++;
 	}
-	cur->next = p;
-}
+	printf("%d: %s", argc, *(argv + 1));
+	// for (int i = 10; i >= 0; i--)
+	// {
+	// 	last_insert(&head, i);
+	// 	insert_first(&head2, i);
+	// }
+	// method_node(head, print);
+	// method_node(head2, print);
+	// printf("\n");
+	// pushb(&head,&head2);
+	// method_node(head, print);
+	// method_node(head2, print);
+	// printf("\n");
+	// rotate(&head);
+	// rotate(&head2);
+	// method_node(head, print);
+	// method_node(head2, print);
 
-void Insert_first(List** head, int num)
-{
-	List*	p;
+	// printf("\n");
+	// revrotate(&head);
+	// revrotate(&head2);
+	// method_node(head, print);
+	// method_node(head2, print);
 
-	p = (List*)malloc(sizeof(List));
-	p->a = num;
-	p->next = *head;
-	*head = p;
-}
-
-void Delete_first(List** head)
-{
-	List*	node;
-
-	node = (*head)->next;
-	free(*head);
-	*head = node;
-}
-
-void Delete_last(List** head)
-{
-	List*	node;
-	List*	pre;
-
-	pre = 0;
-	node = *head;
-	while (node->next != 0)
-	{
-		pre = node;
-		node = node->next;
-	}
-	if (pre == 0)
-	{
-		free(node);
-		node = 0;
-	}
-	else
-	{
-		free(node);
-		pre->next = 0;
-	}
-}
-
-void methodNode(List* head, void (*f)(List *))
-{
-	List*	node;
-	
-	node = head;
-	while (node != 0)
-	{
-		f(node);
-		node = node->next;
-	}
-}
-
-void print(List *node)
-{
-	printf("%d\n", node->a);
-}
-
-int main(void)
-{
-	List*	head;
-
-	head = 0;
-	for (int i = 10; i >= 0; i--)
-	{
-		LastInsert(&head, i);
-	}
-	methodNode(head, print);
-	Delete_first(&head);
-	Delete_first(&head);
-	Delete_first(&head);
-	Delete_last(&head);
-	Delete_last(&head);
-
-	methodNode(head, print);
+	// delete_all(&head);
+	// delete_all(&head2);
 	return (0);
 }
